@@ -17,6 +17,8 @@ jobs:
           path: actions-commit2
 
       - name: Commit and push
+        env:
+          token: ${{ secrets.OTHER_REPO_PAT }}
         run: |
           cd actions-commit2
           echo "Updated at $(date)" >> update.log
