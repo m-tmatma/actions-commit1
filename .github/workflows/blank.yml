@@ -18,7 +18,7 @@ jobs:
 
       - name: Commit and push
         run: |
-          cd other-repo
+          cd actions-commit2
           echo "Updated at $(date)" >> update.log
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
