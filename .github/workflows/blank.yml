@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout other repo
+        if: github.repository_owner == 'm-tmatma'
         uses: actions/checkout@v4
         with:
           repository: ${{ github.repository_owner }}/actions-commit2
@@ -17,6 +18,7 @@ jobs:
           path: actions-commit2
 
       - name: Commit and push
+        if: github.repository_owner == 'm-tmatma'
         env:
           GITHUB_TOKEN: ${{ secrets.OTHER_REPO_PAT }}
         run: |
