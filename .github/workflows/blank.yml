@@ -1,31 +1,27 @@
-# This is a basic workflow to help you get started with Actions
+name: Commit to another repo using actions/checkout
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  commit-other-repo:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Git Commit
+      - name: Checkout other repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/actions-commit2
+          token: ${{ secrets.OTHER_REPO_PAT }}
+          path: actions-commit2
+
+      - name: Commit and push
         run: |
+          cd other-repo
+          echo "Updated at $(date)" >> update.log
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "Update by GitHub Actions"
+          git add update.log
+          git commit -m "Update from workflow" || echo "No changes"
           git push
